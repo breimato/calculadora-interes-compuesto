@@ -7,15 +7,9 @@ export default defineConfig({
   integrations: [
     react(),
     tailwind({
-      applyBaseStyles: false,
+      applyBaseStyles: true,
     }),
   ],
-  site: 'https://breimato.es/calculadora',
-  base: '/calculadora/',
-  build: {
-    assets: '/calculadora/',
-    siteAssets: true,
-  },
-  favicon: '/calculadora/calculadora.png',
-  trailingSlash: 'always',
+  site: 'https://calculadora-interes-compuesto.vercel.app',
+  favicon: '/calculadora.png',
 });
