@@ -10,6 +10,12 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
   ],
-  site: 'https://calculadora-interes-compuesto.vercel.app',
-  favicon: '/calculadora.png',
+  site: 'https://breimato.es/calculadora',
+  base: '/calculadora/',
+  build: {
+    assets: '/calculadora/',
+    siteAssets: true,
+  },
+  favicon: '/calculadora/calculadora.png',
+  trailingSlash: 'always',
 });

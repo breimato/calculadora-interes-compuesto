@@ -2,6 +2,7 @@
   "name": "calculadora-interes-compuesto",
   "type": "module",
   "version": "0.0.1",
+  "description": "Calculadora de Interés Compuesto - Calcula tus inversiones con precisión",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
