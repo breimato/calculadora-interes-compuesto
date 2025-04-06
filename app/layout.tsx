@@ -2,13 +2,9 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Calculadora de Interés Compuesto',
-  description: 'Calculadora de Interés Compuesto - Breixo',
-  generator: 'Next.js',
-  icons: {
-    icon: '/calculadora-imagen.png',
-    apple: '/calculadora-imagen.png'
-  }
+  title: 'v0 App',
+  description: 'Created with v0',
+  generator: 'v0.dev',
 }
 
 export default function RootLayout({
