@@ -226,25 +226,28 @@ export default function CompoundInterestCalculator() {
   }
 
   return (
-    <div className="space-y-8">
-      <Card>
-        <div className="p-6">
+    <div className="space-y-10">
+      <Card className="overflow-hidden">
+        <div className="p-8">
           <div className="flex items-center justify-between mb-6">
             <div>
               <h2 className="text-xl font-semibold">Parámetros de Inversión</h2>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-muted-foreground">
                 Ingrese los detalles de su inversión para calcular el interés compuesto.
               </p>
             </div>
-            <div className="flex items-center gap-2">
-              <Label htmlFor="advancedMode">Modo Avanzado</Label>
-              <input
-                type="checkbox"
-                id="advancedMode"
-                checked={isAdvancedMode}
-                onChange={(e) => setIsAdvancedMode(e.target.checked)}
-                className="h-4 w-4"
-              />
+            <div className="flex items-center gap-3">
+              <Label htmlFor="toggle-advanced" className="font-medium">Modo Avanzado</Label>
+              <label className="switch relative inline-block w-10 h-6">
+                <input
+                  type="checkbox"
+                  id="toggle-advanced"
+                  checked={isAdvancedMode}
+                  onChange={(e) => setIsAdvancedMode(e.target.checked)}
+                  className="sr-only"
+                />
+                <span className="slider absolute cursor-pointer top-0 left-0 right-0 bottom-0 bg-gray-300 rounded-full transition-colors duration-200 before:absolute before:content-[''] before:h-4 before:w-4 before:left-1 before:bottom-1 before:bg-white before:rounded-full before:transition-transform before:duration-200 before:ease-in-out"></span>
+              </label>
             </div>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -268,7 +271,7 @@ export default function CompoundInterestCalculator() {
                   value={contributionAmount}
                   onChange={(e) => setContributionAmount(e.target.value)}
                 />
-                <p className="text-xs text-gray-500 mt-1">Valores negativos representan retiradas periódicas</p>
+                <p className="text-xs text-muted-foreground mt-1">Valores negativos representan retiradas periódicas</p>
               </div>
             ) : null}
 
@@ -284,10 +287,14 @@ export default function CompoundInterestCalculator() {
 
             {isAdvancedMode && (
               <div className="col-span-3 space-y-4">
-                <div className="border rounded-lg p-4 space-y-4">
-                  <h3 className="font-semibold">Períodos de inversión</h3>
+                <div className="border border-indigo-100 dark:border-indigo-900/50 rounded-lg p-5 space-y-5 bg-background/50 backdrop-blur-sm shadow-sm">
+                  <h3 className="text-lg font-bold mb-2 pb-2 border-b flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2 text-indigo-600 dark:text-indigo-400"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    Períodos de inversión
+                  </h3>
                   {investmentPeriods.map((period, index) => (
-                    <div key={index} className="grid sm:grid-cols-2 gap-4 p-4 border rounded-lg bg-gray-50">
+                    <div key={index} className="grid sm:grid-cols-2 gap-4 p-4 border rounded-lg bg-background/30 backdrop-blur-sm relative overflow-hidden">
+                      <div className="border-l-2 border-indigo-200 dark:border-indigo-800 absolute left-0 top-0 bottom-0 w-1"></div>
                       <div className="space-y-2">
                         <Label htmlFor={`period-${index}-years`}>
                           Duración del período {index + 1} (años)
@@ -319,7 +326,7 @@ export default function CompoundInterestCalculator() {
                             setInvestmentPeriods(newPeriods)
                           }}
                         />
-                        <p className="text-xs text-gray-500">Valores negativos representan retiradas</p>
+                        <p className="text-xs text-muted-foreground">Valores negativos representan retiradas</p>
                       </div>
                     </div>
                   ))}
@@ -327,16 +334,18 @@ export default function CompoundInterestCalculator() {
                     <Button
                       type="button"
                       onClick={() => setInvestmentPeriods([...investmentPeriods, { years: "5", contribution: "0" }])}
-                      variant="outline"
+                      className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-sm hover:shadow-md transition-all duration-300"
                     >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                       Añadir Período
                     </Button>
                     {investmentPeriods.length > 1 && (
                       <Button
                         type="button"
                         onClick={() => setInvestmentPeriods(investmentPeriods.slice(0, -1))}
-                        variant="outline"
+                        className="bg-gradient-to-r from-rose-500 to-red-500 hover:from-rose-600 hover:to-red-600 text-white shadow-sm hover:shadow-md transition-all duration-300"
                       >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                         Eliminar Último Período
                       </Button>
                     )}
@@ -374,14 +383,14 @@ export default function CompoundInterestCalculator() {
                 className={isAdvancedMode ? "bg-gray-100" : ""}
               />
               {isAdvancedMode && (
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-muted-foreground mt-1">
                   Suma total de los períodos definidos
                 </p>
               )}
             </div>
 
             <div className="flex items-end">
-              <Button onClick={calculateCompoundInterest} className="w-full">
+              <Button onClick={calculateCompoundInterest} className="w-full bg-gradient-to-r from-indigo-600 to-violet-500 hover:from-indigo-700 hover:to-violet-600 text-white shadow-md hover:shadow-lg transition-all duration-300">
                 Calcular
               </Button>
             </div>
@@ -391,13 +400,13 @@ export default function CompoundInterestCalculator() {
 
       {result && (
         <>
-          <Card>
-            <div className="p-6">
+          <Card className="overflow-hidden">
+            <div className="p-8">
               <h2 className="text-xl font-semibold mb-2">Resultados</h2>
-              <p className="text-sm text-gray-500 mb-6">Visualización de su inversión a lo largo del tiempo</p>
+              <p className="text-sm text-muted-foreground mb-6">Visualización de su inversión a lo largo del tiempo</p>
               <div className="mb-6 text-center">
-                <h3 className="text-lg font-medium text-gray-500 mb-1">Cantidad Total al Final</h3>
-                <p className="text-4xl font-bold">
+                <h3 className="text-lg font-medium text-muted-foreground mb-1">Cantidad Total al Final</h3>
+                <p className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-violet-500">
                   {new Intl.NumberFormat("es-ES", {
                     style: "currency",
                     currency: "EUR",
@@ -412,10 +421,10 @@ export default function CompoundInterestCalculator() {
             </div>
           </Card>
 
-          <Card>
-            <div className="p-6">
+          <Card className="overflow-hidden">
+            <div className="p-8">
               <h2 className="text-xl font-semibold mb-2">Desglose Anual</h2>
-              <p className="text-sm text-gray-500 mb-6">Detalle del crecimiento de su inversión año por año</p>
+              <p className="text-sm text-muted-foreground mb-6">Detalle del crecimiento de su inversión año por año</p>
               <YearlyBreakdown yearlyData={result.yearlyData} />
             </div>
           </Card>
