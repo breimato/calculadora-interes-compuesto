@@ -31,7 +31,8 @@ export function CompoundInterestCalculator() {
   const [contributionAmount, setContributionAmount] = useState<string>("100")
   const [contributionFrequency, setContributionFrequency] = useState<FrequencyType>("monthly")
   const [annualInterestRate, setAnnualInterestRate] = useState<string>("5")
-  const [years, setYears] = useState<string>("10")
+  const [investmentYears, setInvestmentYears] = useState<string>("10")
+  const [maintenanceYears, setMaintenanceYears] = useState<string>("5")
   const [result, setResult] = useState<CalculationResult | null>(null)
 
   const frequencyMap = {
@@ -69,10 +70,19 @@ export function CompoundInterestCalculator() {
       return false
     }
 
-    if (!years || years.trim() === "") {
+    if (!investmentYears || investmentYears.trim() === "") {
       toast({
         title: "Campo requerido",
-        description: "Por favor, ingrese los años a invertir",
+        description: "Por favor, ingrese los años de inversión inicial",
+        variant: "destructive",
+      })
+      return false
+    }
+
+    if (!maintenanceYears || maintenanceYears.trim() === "") {
+      toast({
+        title: "Campo requerido",
+        description: "Por favor, ingrese los años de mantenimiento",
         variant: "destructive",
       })
       return false
@@ -87,7 +97,8 @@ export function CompoundInterestCalculator() {
     const initialAmountNum = Number.parseFloat(initialAmount)
     const contributionAmountNum = Number.parseFloat(contributionAmount)
     const annualInterestRateNum = Number.parseFloat(annualInterestRate)
-    const yearsNum = Number.parseInt(years)
+    const investmentYearsNum = Number.parseInt(investmentYears)
+    const maintenanceYearsNum = Number.parseInt(maintenanceYears)
 
     if (initialAmountNum < 0) {
       toast({
@@ -107,10 +118,19 @@ export function CompoundInterestCalculator() {
       return
     }
 
-    if (yearsNum <= 0) {
+    if (investmentYearsNum <= 0) {
       toast({
         title: "Valor inválido",
-        description: "Los años a invertir deben ser mayores a cero",
+        description: "Los años de inversión inicial deben ser mayores a cero",
+        variant: "destructive",
+      })
+      return
+    }
+
+    if (maintenanceYearsNum < 0) {
+      toast({
+        title: "Valor inválido",
+        description: "Los años de mantenimiento no pueden ser negativos",
         variant: "destructive",
       })
       return
@@ -128,7 +148,8 @@ export function CompoundInterestCalculator() {
     const totalInterestArray = []
     const totalAmountArray = []
 
-    for (let year = 1; year <= yearsNum; year++) {
+    // Primera fase: Aportes regulares
+    for (let year = 1; year <= investmentYearsNum; year++) {
       const startYearBalance = balance
       let yearlyContribution = 0
       let yearlyInterest = 0
@@ -155,6 +176,32 @@ export function CompoundInterestCalculator() {
 
       yearsArray.push(year)
       totalInvestedArray.push(totalContributions)
+      totalInterestArray.push(balance - totalContributions)
+      totalAmountArray.push(balance)
+    }
+
+    // Segunda fase: Mantenimiento sin aportes
+    for (let year = investmentYearsNum + 1; year <= investmentYearsNum + maintenanceYearsNum; year++) {
+      const startYearBalance = balance
+      let yearlyInterest = 0
+
+      for (let period = 1; period <= periodsPerYear; period++) {
+        // Calculate interest for this period
+        const periodInterest = balance * interestRatePerPeriod
+        balance += periodInterest
+        yearlyInterest += periodInterest
+      }
+
+      yearlyData.push({
+        year,
+        startBalance: startYearBalance,
+        contribution: 0,
+        interest: yearlyInterest,
+        endBalance: balance,
+      })
+
+      yearsArray.push(year)
+      totalInvestedArray.push(totalContributions) // No hay nuevos aportes
       totalInterestArray.push(balance - totalContributions)
       totalAmountArray.push(balance)
     }
@@ -233,13 +280,19 @@ export function CompoundInterestCalculator() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="years">Años a Invertir</Label>
-              <Input id="years" type="number" min="1" value={years} onChange={(e) => setYears(e.target.value)} />
+              <Label htmlFor="maintenanceYears">Años de Mantenimiento</Label>
+              <Input
+                id="maintenanceYears"
+                type="number"
+                min="0"
+                value={maintenanceYears}
+                onChange={(e) => setMaintenanceYears(e.target.value)}
+              />
             </div>
 
             <div className="flex items-end">
               <Button onClick={calculateCompoundInterest} className="w-full">
-                Calcular
+                Calcula
               </Button>
             </div>
           </div>
@@ -285,4 +338,3 @@ export function CompoundInterestCalculator() {
     </div>
   )
 }
-

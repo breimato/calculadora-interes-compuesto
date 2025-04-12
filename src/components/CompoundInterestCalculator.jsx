@@ -11,12 +11,17 @@ import { YearlyBreakdown } from "./YearlyBreakdown"
 import { toast } from "./ui/toast"
 
 export default function CompoundInterestCalculator() {
-  const [initialAmount, setInitialAmount] = useState("1000")
-  const [contributionAmount, setContributionAmount] = useState("100")
+  const [initialAmount, setInitialAmount] = useState("10000")
+  const [contributionAmount, setContributionAmount] = useState("1000")
   const [contributionFrequency, setContributionFrequency] = useState("monthly")
-  const [annualInterestRate, setAnnualInterestRate] = useState("5")
-  const [years, setYears] = useState("10")
+  const [annualInterestRate, setAnnualInterestRate] = useState("8")
+  const [years, setYears] = useState("20")
   const [result, setResult] = useState(null)
+  const [isAdvancedMode, setIsAdvancedMode] = useState(false)
+  const [investmentPeriods, setInvestmentPeriods] = useState([
+    { years: "10", contribution: "1000" },
+    { years: "10", contribution: "0" }
+  ])
 
   const frequencyMap = {
     monthly: { label: "Mensual", times: 12 },
@@ -35,7 +40,7 @@ export default function CompoundInterestCalculator() {
       return false
     }
 
-    if (!contributionAmount || contributionAmount.trim() === "") {
+    if (!isAdvancedMode && (!contributionAmount || contributionAmount.trim() === "")) {
       toast({
         title: "Campo requerido",
         description: "Por favor, ingrese un aporte periódico",
@@ -53,13 +58,35 @@ export default function CompoundInterestCalculator() {
       return false
     }
 
-    if (!years || years.trim() === "") {
+    if (!isAdvancedMode && (!years || years.trim() === "")) {
       toast({
         title: "Campo requerido",
         description: "Por favor, ingrese los años a invertir",
         variant: "destructive",
       })
       return false
+    }
+
+    if (isAdvancedMode) {
+      for (const period of investmentPeriods) {
+        if (!period.years || period.years.trim() === "" || Number.parseInt(period.years) <= 0) {
+          toast({
+            title: "Valor inválido",
+            description: "Todos los períodos deben tener una duración válida mayor a cero",
+            variant: "destructive",
+          })
+          return false
+        }
+
+        if (!period.contribution || period.contribution.trim() === "") {
+          toast({
+            title: "Campo requerido",
+            description: "Por favor, ingrese un aporte para cada período",
+            variant: "destructive",
+          })
+          return false
+        }
+      }
     }
 
     return true
@@ -69,9 +96,14 @@ export default function CompoundInterestCalculator() {
     if (!validateInputs()) return
 
     const initialAmountNum = Number.parseFloat(initialAmount)
-    const contributionAmountNum = Number.parseFloat(contributionAmount)
     const annualInterestRateNum = Number.parseFloat(annualInterestRate)
-    const yearsNum = Number.parseInt(years)
+    let totalYears = 0
+
+    if (isAdvancedMode) {
+      totalYears = investmentPeriods.reduce((sum, period) => sum + Number.parseInt(period.years), 0)
+    } else {
+      totalYears = Number.parseInt(years)
+    }
 
     if (initialAmountNum < 0) {
       toast({
@@ -91,7 +123,7 @@ export default function CompoundInterestCalculator() {
       return
     }
 
-    if (yearsNum <= 0) {
+    if (totalYears <= 0) {
       toast({
         title: "Valor inválido",
         description: "Los años a invertir deben ser mayores a cero",
@@ -111,36 +143,77 @@ export default function CompoundInterestCalculator() {
     const totalInvestedArray = []
     const totalInterestArray = []
     const totalAmountArray = []
+    let currentYear = 1
 
-    for (let year = 1; year <= yearsNum; year++) {
-      const startYearBalance = balance
-      let yearlyContribution = 0
-      let yearlyInterest = 0
+    if (isAdvancedMode) {
+      for (const period of investmentPeriods) {
+        const periodYears = Number.parseInt(period.years)
+        const periodContribution = Number.parseFloat(period.contribution)
 
-      for (let period = 1; period <= periodsPerYear; period++) {
-        // Add contribution
-        balance += contributionAmountNum
-        yearlyContribution += contributionAmountNum
-        totalContributions += contributionAmountNum
+        for (let year = 0; year < periodYears; year++) {
+          const startYearBalance = balance
+          let yearlyContribution = 0
+          let yearlyInterest = 0
 
-        // Calculate interest for this period
-        const periodInterest = balance * interestRatePerPeriod
-        balance += periodInterest
-        yearlyInterest += periodInterest
+          for (let period = 1; period <= periodsPerYear; period++) {
+            // Add contribution
+            balance += periodContribution
+            yearlyContribution += periodContribution
+            totalContributions += periodContribution
+
+            // Calculate interest for this period
+            const periodInterest = balance * interestRatePerPeriod
+            balance += periodInterest
+            yearlyInterest += periodInterest
+          }
+
+          yearlyData.push({
+            year: currentYear,
+            startBalance: startYearBalance,
+            contribution: yearlyContribution,
+            interest: yearlyInterest,
+            endBalance: balance,
+          })
+
+          yearsArray.push(currentYear)
+          totalInvestedArray.push(totalContributions)
+          totalInterestArray.push(balance - totalContributions)
+          totalAmountArray.push(balance)
+          currentYear++
+        }
       }
+    } else {
+      const contributionAmountNum = Number.parseFloat(contributionAmount)
+      for (let year = 1; year <= totalYears; year++) {
+        const startYearBalance = balance
+        let yearlyContribution = 0
+        let yearlyInterest = 0
 
-      yearlyData.push({
-        year,
-        startBalance: startYearBalance,
-        contribution: yearlyContribution,
-        interest: yearlyInterest,
-        endBalance: balance,
-      })
+        for (let period = 1; period <= periodsPerYear; period++) {
+          // Add contribution
+          balance += contributionAmountNum
+          yearlyContribution += contributionAmountNum
+          totalContributions += contributionAmountNum
 
-      yearsArray.push(year)
-      totalInvestedArray.push(totalContributions)
-      totalInterestArray.push(balance - totalContributions)
-      totalAmountArray.push(balance)
+          // Calculate interest for this period
+          const periodInterest = balance * interestRatePerPeriod
+          balance += periodInterest
+          yearlyInterest += periodInterest
+        }
+
+        yearlyData.push({
+          year,
+          startBalance: startYearBalance,
+          contribution: yearlyContribution,
+          interest: yearlyInterest,
+          endBalance: balance,
+        })
+
+        yearsArray.push(year)
+        totalInvestedArray.push(totalContributions)
+        totalInterestArray.push(balance - totalContributions)
+        totalAmountArray.push(balance)
+      }
     }
 
     setResult({
@@ -156,11 +229,24 @@ export default function CompoundInterestCalculator() {
     <div className="space-y-8">
       <Card>
         <div className="p-6">
-          <h2 className="text-xl font-semibold mb-2">Parámetros de Inversión</h2>
-          <p className="text-sm text-gray-500 mb-6">
-            Ingrese los detalles de su inversión para calcular el interés compuesto. Puede usar valores negativos en el
-            aporte periódico para simular retiradas.
-          </p>
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-xl font-semibold">Parámetros de Inversión</h2>
+              <p className="text-sm text-gray-500">
+                Ingrese los detalles de su inversión para calcular el interés compuesto.
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <Label htmlFor="advancedMode">Modo Avanzado</Label>
+              <input
+                type="checkbox"
+                id="advancedMode"
+                checked={isAdvancedMode}
+                onChange={(e) => setIsAdvancedMode(e.target.checked)}
+                className="h-4 w-4"
+              />
+            </div>
+          </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             <div className="space-y-2">
               <Label htmlFor="initialAmount">Cantidad Inicial (€)</Label>
@@ -173,16 +259,18 @@ export default function CompoundInterestCalculator() {
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="contributionAmount">Aporte Periódico (€)</Label>
-              <Input
-                id="contributionAmount"
-                type="number"
-                value={contributionAmount}
-                onChange={(e) => setContributionAmount(e.target.value)}
-              />
-              <p className="text-xs text-gray-500 mt-1">Valores negativos representan retiradas periódicas</p>
-            </div>
+            {!isAdvancedMode ? (
+              <div className="space-y-2">
+                <Label htmlFor="contributionAmount">Aporte Periódico (€)</Label>
+                <Input
+                  id="contributionAmount"
+                  type="number"
+                  value={contributionAmount}
+                  onChange={(e) => setContributionAmount(e.target.value)}
+                />
+                <p className="text-xs text-gray-500 mt-1">Valores negativos representan retiradas periódicas</p>
+              </div>
+            ) : null}
 
             <div className="space-y-2">
               <Label htmlFor="contributionFrequency">Periodicidad del Aporte</Label>
@@ -193,6 +281,69 @@ export default function CompoundInterestCalculator() {
                 <SelectItem value="annual">Anual</SelectItem>
               </Select>
             </div>
+
+            {isAdvancedMode && (
+              <div className="col-span-3 space-y-4">
+                <div className="border rounded-lg p-4 space-y-4">
+                  <h3 className="font-semibold">Períodos de inversión</h3>
+                  {investmentPeriods.map((period, index) => (
+                    <div key={index} className="grid sm:grid-cols-2 gap-4 p-4 border rounded-lg bg-gray-50">
+                      <div className="space-y-2">
+                        <Label htmlFor={`period-${index}-years`}>
+                          Duración del período {index + 1} (años)
+                        </Label>
+                        <Input
+                          type="number"
+                          id={`period-${index}-years`}
+                          value={period.years}
+                          onChange={(e) => {
+                            const newPeriods = [...investmentPeriods]
+                            newPeriods[index].years = e.target.value
+                            setInvestmentPeriods(newPeriods)
+                          }}
+                          min="1"
+                          step="1"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor={`period-${index}-contribution`}>
+                          Aportación {frequencyMap[contributionFrequency].label} (€)
+                        </Label>
+                        <Input
+                          type="number"
+                          id={`period-${index}-contribution`}
+                          value={period.contribution}
+                          onChange={(e) => {
+                            const newPeriods = [...investmentPeriods]
+                            newPeriods[index].contribution = e.target.value
+                            setInvestmentPeriods(newPeriods)
+                          }}
+                        />
+                        <p className="text-xs text-gray-500">Valores negativos representan retiradas</p>
+                      </div>
+                    </div>
+                  ))}
+                  <div className="flex gap-2 mt-4">
+                    <Button
+                      type="button"
+                      onClick={() => setInvestmentPeriods([...investmentPeriods, { years: "5", contribution: "0" }])}
+                      variant="outline"
+                    >
+                      Añadir Período
+                    </Button>
+                    {investmentPeriods.length > 1 && (
+                      <Button
+                        type="button"
+                        onClick={() => setInvestmentPeriods(investmentPeriods.slice(0, -1))}
+                        variant="outline"
+                      >
+                        Eliminar Último Período
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
 
             <div className="space-y-2">
               <Label htmlFor="annualInterestRate">Tasa Anual de Interés (%)</Label>
@@ -207,8 +358,26 @@ export default function CompoundInterestCalculator() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="years">Años a Invertir</Label>
-              <Input id="years" type="number" min="1" value={years} onChange={(e) => setYears(e.target.value)} />
+              <Label htmlFor="years">
+                {isAdvancedMode ? "Total de años" : "Años a invertir"}
+              </Label>
+              <Input
+                id="years"
+                type="number"
+                min="1"
+                value={isAdvancedMode 
+                  ? investmentPeriods.reduce((sum, period) => sum + Number.parseInt(period.years || 0), 0)
+                  : years
+                }
+                onChange={(e) => setYears(e.target.value)}
+                disabled={isAdvancedMode}
+                className={isAdvancedMode ? "bg-gray-100" : ""}
+              />
+              {isAdvancedMode && (
+                <p className="text-xs text-gray-500 mt-1">
+                  Suma total de los períodos definidos
+                </p>
+              )}
             </div>
 
             <div className="flex items-end">
