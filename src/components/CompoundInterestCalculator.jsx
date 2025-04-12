@@ -389,7 +389,8 @@ export default function CompoundInterestCalculator() {
               )}
             </div>
 
-            <div className="flex items-end">
+            <div className="space-y-2">
+              <Label className="opacity-0">Acción</Label>
               <Button onClick={calculateCompoundInterest} className="w-full bg-gradient-to-r from-indigo-600 to-violet-500 hover:from-indigo-700 hover:to-violet-600 text-white shadow-md hover:shadow-lg transition-all duration-300">
                 Calcular
               </Button>
