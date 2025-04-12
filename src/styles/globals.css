@@ -82,10 +82,8 @@
 }
 
 /* Estilos para el toggle switch */
-input:checked + .slider {
-  background-color: #4c51bf;
-}
-
-input:checked + .slider:before {
-  transform: translateX(16px);
+@media (max-width: 640px) {
+  .peer-checked:after\:translate-x-full:after {
+    transform: translateX(calc(100% - 4px)) !important;
+  }
 }

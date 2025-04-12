@@ -238,15 +238,15 @@ export default function CompoundInterestCalculator() {
             </div>
             <div className="flex items-center gap-3">
               <Label htmlFor="toggle-advanced" className="font-medium">Modo Avanzado</Label>
-              <label className="switch relative inline-block w-10 h-6">
+              <label htmlFor="toggle-advanced" className="relative inline-flex items-center cursor-pointer">
                 <input
                   type="checkbox"
                   id="toggle-advanced"
                   checked={isAdvancedMode}
                   onChange={(e) => setIsAdvancedMode(e.target.checked)}
-                  className="sr-only"
+                  className="sr-only peer"
                 />
-                <span className="slider absolute cursor-pointer top-0 left-0 right-0 bottom-0 bg-gray-300 rounded-full transition-colors duration-200 before:absolute before:content-[''] before:h-4 before:w-4 before:left-1 before:bottom-1 before:bg-white before:rounded-full before:transition-transform before:duration-200 before:ease-in-out"></span>
+                <div className="w-11 h-6 bg-gray-300 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
               </label>
             </div>
           </div>
