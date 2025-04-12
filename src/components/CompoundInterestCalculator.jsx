@@ -227,11 +227,16 @@ export default function CompoundInterestCalculator() {
 
   return (
     <div className="space-y-10">
-      <Card className="overflow-hidden">
-        <div className="p-8">
+      <Card className="overflow-hidden bg-card">
+        <div className="p-8 bg-card">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-xl font-semibold">Parámetros de Inversión</h2>
+              <h2 className="text-xl font-semibold flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-indigo-600 dark:text-indigo-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+            </svg>
+            Parámetros de Inversión
+          </h2>
               <p className="text-sm text-muted-foreground">
                 Ingrese los detalles de su inversión para calcular el interés compuesto.
               </p>
@@ -380,7 +385,7 @@ export default function CompoundInterestCalculator() {
                 }
                 onChange={(e) => setYears(e.target.value)}
                 disabled={isAdvancedMode}
-                className={isAdvancedMode ? "bg-gray-100" : ""}
+                className={isAdvancedMode ? "bg-gray-100 dark:bg-gray-800 dark:text-gray-200" : ""}
               />
               {isAdvancedMode && (
                 <p className="text-xs text-muted-foreground mt-1">
@@ -401,8 +406,8 @@ export default function CompoundInterestCalculator() {
 
       {result && (
         <>
-          <Card className="overflow-hidden">
-            <div className="p-8">
+          <Card className="overflow-hidden bg-card">
+            <div className="p-8 bg-card">
               <h2 className="text-xl font-semibold mb-2">Resultados</h2>
               <p className="text-sm text-muted-foreground mb-6">Visualización de su inversión a lo largo del tiempo</p>
               <div className="mb-6 text-center">
@@ -422,8 +427,8 @@ export default function CompoundInterestCalculator() {
             </div>
           </Card>
 
-          <Card className="overflow-hidden">
-            <div className="p-8">
+          <Card className="overflow-hidden bg-card">
+            <div className="p-8 bg-card">
               <h2 className="text-xl font-semibold mb-2">Desglose Anual</h2>
               <p className="text-sm text-muted-foreground mb-6">Detalle del crecimiento de su inversión año por año</p>
               <YearlyBreakdown yearlyData={result.yearlyData} />

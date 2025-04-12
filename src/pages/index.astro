@@ -4,7 +4,22 @@ import CompoundInterestCalculator from '../components/CompoundInterestCalculator
 ---
 
 <Layout title="InverCalc | Calculadora de Interés Compuesto">
-  <main class="container mx-auto py-12 px-4">
+  <main class="container mx-auto py-12 px-4 relative">
+    <button 
+      id="theme-toggle" 
+      class="absolute top-4 right-4 p-1.5 rounded-full bg-secondary hover:bg-secondary/80 transition-colors"
+      aria-label="Cambiar tema"
+    >
+      <span class="relative w-5 h-5 block">
+        <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute inset-0">
+          <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+        </svg>
+        <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute inset-0">
+          <path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+        </svg>
+      </span>
+    </button>
+    
     <div class="flex flex-col items-center text-center mb-10">
       <h1 class="text-4xl font-bold tracking-tight mb-3 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-violet-500">
         Calculadora de Interés Compuesto
@@ -16,5 +31,34 @@ import CompoundInterestCalculator from '../components/CompoundInterestCalculator
     
     <CompoundInterestCalculator client:load />
   </main>
-</Layout>
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const themeToggle = document.getElementById('theme-toggle');
+    const sunIcon = document.getElementById('sun-icon');
+    const moonIcon = document.getElementById('moon-icon');
+    
+    // Actualiza la visibilidad de los iconos según el tema actual
+    function updateIcons() {
+      const isDark = document.documentElement.classList.contains('dark');
+      
+      // En modo oscuro muestra el sol, en modo claro muestra la luna
+      sunIcon.style.display = isDark ? 'block' : 'none';
+      moonIcon.style.display = isDark ? 'none' : 'block';
+    }
+    
+    // Inicializa los iconos al cargar la página
+    updateIcons();
+    
+    // Maneja el cambio de tema al hacer clic en el botón
+    themeToggle.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      const newTheme = isDark ? 'light' : 'dark';
+      
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', newTheme);
+      updateIcons();
+    });
+  });
+</script>
+</Layout>

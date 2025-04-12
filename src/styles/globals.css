@@ -79,6 +79,53 @@
     font-family: 'Manrope', sans-serif;
     @apply font-semibold tracking-tight;
   }
+  svg {
+    transition: opacity 0.3s ease-in-out;
+  }
+  .dark .block {
+    display: block;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+  }
+  .dark .hidden {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+}
+
+/* Estilos para el botón de cambio de tema */
+.theme-toggle-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.5rem;
+  border-radius: 9999px;
+  background-color: var(--secondary);
+  transition: background-color 0.3s ease-in-out;
+}
+
+.theme-toggle-button:hover {
+  background-color: var(--secondary-foreground);
+}
+
+.theme-toggle-icon {
+  width: 40px;
+  height: 40px;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.theme-toggle-icon.sun {
+  opacity: 0;
+}
+
+.dark .theme-toggle-icon.sun {
+  opacity: 1;
+}
+
+.dark .theme-toggle-icon.moon {
+  opacity: 0;
 }
 
 /* Estilos para el toggle switch */
