@@ -38,13 +38,19 @@ import CompoundInterestCalculator from '../components/CompoundInterestCalculator
     const sunIcon = document.getElementById('sun-icon');
     const moonIcon = document.getElementById('moon-icon');
     
+    // Verifica que todos los elementos existan
+    if (!themeToggle || !sunIcon || !moonIcon) {
+      console.warn('Elementos del tema no encontrados');
+      return;
+    }
+    
     // Actualiza la visibilidad de los iconos según el tema actual
     function updateIcons() {
       const isDark = document.documentElement.classList.contains('dark');
       
       // En modo oscuro muestra el sol, en modo claro muestra la luna
-      sunIcon.style.display = isDark ? 'block' : 'none';
-      moonIcon.style.display = isDark ? 'none' : 'block';
+      if (sunIcon) sunIcon.style.display = isDark ? 'block' : 'none';
+      if (moonIcon) moonIcon.style.display = isDark ? 'none' : 'block';
     }
     
     // Inicializa los iconos al cargar la página
