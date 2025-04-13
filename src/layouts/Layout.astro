@@ -1,9 +1,13 @@
 ---
+import StructuredData from '../components/StructuredData.astro';
+
 interface Props {
   title: string;
+  description?: string;
+  structuredDataType?: string;
 }
 
-const { title } = Astro.props;
+const { title, description, structuredDataType } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -14,6 +18,7 @@ const { title } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="calculadora/calculadora.png" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    {description && <meta name="description" content={description} />}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -41,6 +46,7 @@ const { title } = Astro.props;
     </script>
   </head>
   <body>
+    {structuredDataType && <StructuredData type={structuredDataType} />}
     <slot />
   </body>
 </html>
