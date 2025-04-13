@@ -257,7 +257,7 @@ export default function CompoundInterestCalculator() {
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             <div className="space-y-2">
-              <Label htmlFor="initialAmount">Cantidad Inicial (€)</Label>
+              <Label htmlFor="initialAmount" className="whitespace-nowrap">Cantidad Inicial (€)</Label>
               <Input
                 id="initialAmount"
                 type="number"
@@ -269,7 +269,7 @@ export default function CompoundInterestCalculator() {
 
             {!isAdvancedMode ? (
               <div className="space-y-2">
-                <Label htmlFor="contributionAmount">Aporte Periódico (€)</Label>
+                <Label htmlFor="contributionAmount" className="whitespace-nowrap">Aporte Periódico (€)</Label>
                 <Input
                   id="contributionAmount"
                   type="number"
@@ -281,7 +281,7 @@ export default function CompoundInterestCalculator() {
             ) : null}
 
             <div className="space-y-2">
-              <Label>Periodicidad del Aporte</Label>
+              <Label className="whitespace-nowrap">Tipo de Aporte</Label>
               <Select value={contributionFrequency} onValueChange={(value) => setContributionFrequency(value)}>
                 <SelectItem value="monthly">Mensual</SelectItem>
                 <SelectItem value="quarterly">Trimestral</SelectItem>
