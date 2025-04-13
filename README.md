@@ -1,8 +1,8 @@
-# 🧮 Calculadora de Interés Compuesto — [breimato.es/calculadora](https://breimato.es/calculadora)
+# 🧮 Calculadora de Interés Compuesto — [https://breimato.es/calculadora](https://breimato.es/calculadora)
 
 ## 🇪🇸 Español
 
-Bienvenido a la **Calculadora de Interés Compuesto** de [breimato.es](https://breimato.es/calculadora) 📈💰
+Bienvenido a la **Calculadora de Interés Compuesto** de [https://breimato.es/calculadora](https://breimato.es/calculadora) 📈💰
 
 Una herramienta sencilla y visual para simular cómo crece tu dinero con el tiempo gracias al poder del interés compuesto. Ideal para ahorradores, inversores o curiosos de las finanzas personales.
 
@@ -38,7 +38,7 @@ El modo avanzado te permite:
 
 ## 🇬🇧 English
 
-Welcome to the **Compound Interest Calculator** at [breimato.es](https://breimato.es/calculadora) 💰📈
+Welcome to the **Compound Interest Calculator** at [https://breimato.es/calculadora](https://breimato.es/calculadora) 💰📈
 
 A clean, visual tool to simulate how your money grows over time thanks to the magic of compound interest. Perfect for savers, investors, or anyone curious about personal finance.
 
@@ -72,4 +72,4 @@ The advanced mode allows you to:
 
 ---
 
-Made with ❤️ by [breimato.es](https://breimato.es)
+Made with ❤️ by [https://breimato.es/calculadora](https://breimato.es/calculadora)
