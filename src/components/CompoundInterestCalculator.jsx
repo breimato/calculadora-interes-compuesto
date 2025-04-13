@@ -281,7 +281,7 @@ export default function CompoundInterestCalculator() {
             ) : null}
 
             <div className="space-y-2">
-              <Label htmlFor="contributionFrequency">Periodicidad del Aporte</Label>
+              <Label>Periodicidad del Aporte</Label>
               <Select value={contributionFrequency} onValueChange={(value) => setContributionFrequency(value)}>
                 <SelectItem value="monthly">Mensual</SelectItem>
                 <SelectItem value="quarterly">Trimestral</SelectItem>

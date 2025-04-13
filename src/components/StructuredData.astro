@@ -6,13 +6,13 @@ const { type = "FinancialProduct" } = Astro.props;
 const baseStructuredData = {
   "@context": "https://schema.org",
   "@type": type,
-  "name": "InverCalc - Calculadora de Interés Compuesto",
+  "name": "BreiMatoCalc - Calculadora de Interés Compuesto",
   "description": "Calcula el crecimiento de tus inversiones a lo largo del tiempo con nuestra calculadora de interés compuesto. Herramienta gratuita para planificar tu futuro financiero.",
   "url": Astro.site ? new URL(Astro.url.pathname, Astro.site).href : "https://breimato.es/calculadora",
 };
 
 // Datos específicos según el tipo
-let structuredData = { ...baseStructuredData };
+let structuredData = { ...baseStructuredData } as Record<string, any>;
 
 if (type === "FinancialProduct") {
   structuredData = {
@@ -26,7 +26,7 @@ if (type === "FinancialProduct") {
     ],
     "provider": {
       "@type": "Organization",
-      "name": "InverCalc",
+      "name": "BreiMatoCalc",
       "url": Astro.site || "https://breimato.es/calculadora"
     }
   };

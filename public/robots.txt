@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://invercalc.com/sitemap.xml
+Sitemap: https://breimato.es/calculadora/sitemap.xml

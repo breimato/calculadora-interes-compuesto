@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import CompoundInterestCalculator from '../components/CompoundInterestCalculator.jsx';
 ---
 
-<Layout title="InverCalc | Calculadora de Interés Compuesto">
+<Layout title="BreiMatoCalc | Calculadora de Interés Compuesto">
   <main class="container mx-auto py-12 px-4 relative">
     <button 
       id="theme-toggle" 
@@ -21,7 +21,7 @@ import CompoundInterestCalculator from '../components/CompoundInterestCalculator
     </button>
     
     <div class="flex flex-col items-center text-center mb-10">
-      <h1 class="text-4xl font-bold tracking-tight mb-3 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-violet-500">
+      <h1 class="text-4xl font-bold tracking-tight mb-3 text-indigo-600 dark:text-indigo-400">
         Calculadora de Interés Compuesto
       </h1>
       <p class="text-lg text-muted-foreground max-w-2xl">
@@ -32,35 +32,7 @@ import CompoundInterestCalculator from '../components/CompoundInterestCalculator
     <CompoundInterestCalculator client:load />
     
     <footer class="mt-20 text-center">
-      <div class="mb-6">
-        <div class="inline-flex items-center justify-center p-1 rounded-full bg-gray-100 dark:bg-gray-800/50 backdrop-blur-sm shadow-sm">
-          <nav aria-label="Footer navigation">
-            <ul class="flex px-2">
-              <li>
-                <a href="/" class="px-4 py-2 text-sm font-medium text-indigo-600 dark:text-indigo-400 bg-gray-200 dark:bg-gray-700 rounded-full" aria-label="InverCalc home page" aria-current="page">
-                  Inicio
-                </a>
-              </li>
-              <li>
-                <a href="/about" class="px-4 py-2 text-sm hover:text-indigo-500 transition-colors rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-label="Information about InverCalc">
-                  Sobre Nosotros
-                </a>
-              </li>
-              <li>
-                <a href="/terms" class="px-4 py-2 text-sm hover:text-indigo-500 transition-colors rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-label="Terms and conditions of use">
-                  Términos
-                </a>
-              </li>
-              <li>
-                <a href="/privacy" class="px-4 py-2 text-sm hover:text-indigo-500 transition-colors rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-label="Privacy policy">
-                  Privacidad
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-      <p class="text-sm text-muted-foreground">© {new Date().getFullYear()} InverCalc. Todos los derechos reservados.</p>
+      <p class="text-sm text-muted-foreground"> BreiMatoCalc. Todos los derechos reservados.</p>
     </footer>
   </main>
 
