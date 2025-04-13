@@ -1,0 +1,38 @@
+---
+// Componente para generar datos estructurados JSON-LD para SEO
+const { type = "FinancialProduct" } = Astro.props;
+
+// Datos estructurados base
+const baseStructuredData = {
+  "@context": "https://schema.org",
+  "@type": type,
+  "name": "InverCalc - Calculadora de Interés Compuesto",
+  "description": "Calcula el crecimiento de tus inversiones a lo largo del tiempo con nuestra calculadora de interés compuesto. Herramienta gratuita para planificar tu futuro financiero.",
+  "url": Astro.site ? new URL(Astro.url.pathname, Astro.site).href : "https://breimato.es/calculadora",
+};
+
+// Datos específicos según el tipo
+let structuredData = { ...baseStructuredData };
+
+if (type === "FinancialProduct") {
+  structuredData = {
+    ...structuredData,
+    "category": "Calculadora Financiera",
+    "featureList": [
+      "Cálculo de interés compuesto",
+      "Planificación de inversiones",
+      "Proyecciones financieras",
+      "Análisis de crecimiento de capital"
+    ],
+    "provider": {
+      "@type": "Organization",
+      "name": "InverCalc",
+      "url": Astro.site || "https://breimato.es/calculadora"
+    }
+  };
+}
+
+const jsonLD = JSON.stringify(structuredData, null, 2);
+---
+
+<script type="application/ld+json" set:html={jsonLD} />

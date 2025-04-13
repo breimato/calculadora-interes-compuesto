@@ -229,7 +229,7 @@ export default function CompoundInterestCalculator() {
     <div className="space-y-10">
       <Card className="overflow-hidden bg-card">
         <div className="p-8 bg-card">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4 sm:gap-0">
             <div>
               <h2 className="text-xl font-semibold flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-indigo-600 dark:text-indigo-400" viewBox="0 0 20 20" fill="currentColor">
@@ -237,7 +237,7 @@ export default function CompoundInterestCalculator() {
             </svg>
             Parámetros de Inversión
           </h2>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground mt-1 mb-3 sm:mb-0">
                 Ingrese los detalles de su inversión para calcular el interés compuesto.
               </p>
             </div>
@@ -351,7 +351,7 @@ export default function CompoundInterestCalculator() {
                         className="bg-gradient-to-r from-rose-500 to-red-500 hover:from-rose-600 hover:to-red-600 text-white shadow-sm hover:shadow-md transition-all duration-300"
                       >
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                        Eliminar Último Período
+                        Eliminar Período
                       </Button>
                     )}
                   </div>
@@ -360,7 +360,7 @@ export default function CompoundInterestCalculator() {
             )}
 
             <div className="space-y-2">
-              <Label htmlFor="annualInterestRate">Tasa Anual de Interés (%)</Label>
+              <Label htmlFor="annualInterestRate">Interés Anual (%)</Label>
               <Input
                 id="annualInterestRate"
                 type="number"

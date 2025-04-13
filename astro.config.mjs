@@ -11,5 +11,6 @@ export default defineConfig({
     }),
   ],
   site: 'https://calculadora-interes-compuesto.vercel.app',
-  favicon: '/calculadora.png',
+  base: '/calculadora',
+  favicon: '/calculadora/calculadora.png',
 });

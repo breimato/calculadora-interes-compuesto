@@ -268,7 +268,7 @@ export function CompoundInterestCalculator() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="annualInterestRate">Tasa Anual de Interés (%)</Label>
+              <Label htmlFor="annualInterestRate">Interés Anual (%)</Label>
               <Input
                 id="annualInterestRate"
                 type="number"
