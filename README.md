@@ -1,4 +1,4 @@
-# 🧮 Calculadora de Interés Compuesto — [https://breimato.es/calculadora](https://breimato.es/calculadora)
+# 🧮 Calculadora de Interés Compuesto — [BreiMatoCalc](https://breimato.es/calculadora)
 
 ## 🇪🇸 Español
 
