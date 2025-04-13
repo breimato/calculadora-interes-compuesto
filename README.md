@@ -2,7 +2,7 @@
 
 ## 🇪🇸 Español
 
-Bienvenido a la **Calculadora de Interés Compuesto** de [https://breimato.es/calculadora](https://breimato.es/calculadora) 📈💰
+Bienvenido a la **Calculadora de Interés Compuesto** de [BreiMatoCalc](https://breimato.es/calculadora) 📈💰
 
 Una herramienta sencilla y visual para simular cómo crece tu dinero con el tiempo gracias al poder del interés compuesto. Ideal para ahorradores, inversores o curiosos de las finanzas personales.
 
