@@ -359,8 +359,8 @@ export default function CompoundInterestCalculator() {
               </div>
             )}
 
-            <div className="space-y-2">
-              <Label htmlFor="annualInterestRate">Interés Anual (%)</Label>
+            <div className="space-y-2 sm:col-span-1">
+              <Label htmlFor="annualInterestRate" className="whitespace-nowrap">Interés Anual (%)</Label>
               <Input
                 id="annualInterestRate"
                 type="number"
@@ -368,11 +368,12 @@ export default function CompoundInterestCalculator() {
                 step="0.01"
                 value={annualInterestRate}
                 onChange={(e) => setAnnualInterestRate(e.target.value)}
+                className="w-full"
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="years">
+            <div className="space-y-2 sm:col-span-1">
+              <Label htmlFor="years" className="whitespace-nowrap">
                 {isAdvancedMode ? "Total de años" : "Años a invertir"}
               </Label>
               <Input
@@ -385,7 +386,7 @@ export default function CompoundInterestCalculator() {
                 }
                 onChange={(e) => setYears(e.target.value)}
                 disabled={isAdvancedMode}
-                className={isAdvancedMode ? "bg-gray-100 dark:bg-gray-800 dark:text-gray-200" : ""}
+                className={`w-full ${isAdvancedMode ? "bg-gray-100 dark:bg-gray-800 dark:text-gray-200" : ""}`}
               />
               {isAdvancedMode && (
                 <p className="text-xs text-muted-foreground mt-1">
@@ -393,8 +394,8 @@ export default function CompoundInterestCalculator() {
                 </p>
               )}
             </div>
-
-            <div className="space-y-2">
+            
+            <div className="space-y-2 col-span-2 sm:col-span-2 lg:col-span-1 sm:col-start-auto">
               <Label className="opacity-0">Acción</Label>
               <Button onClick={calculateCompoundInterest} className="w-full bg-gradient-to-r from-indigo-600 to-violet-500 hover:from-indigo-700 hover:to-violet-600 text-white shadow-md hover:shadow-lg transition-all duration-300">
                 Calcular
