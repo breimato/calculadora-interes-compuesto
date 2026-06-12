@@ -17,6 +17,7 @@ const PARENT_REDIRECT_MARKER = '# calculadora-interes-compuesto redirects';
 const PARENT_REDIRECT_BLOCK = `<IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteRule ^calculadora-intereses$ /calculadora-intereses/ [R=301,L]
+RewriteRule ^calculadora-intereses/?$ /calculadora-intereses/index.php [R=302,L]
 RewriteRule ^calculadora/?$ /calculadora-intereses/ [R=301,L]
 </IfModule>`;
 
@@ -79,6 +80,22 @@ async function clearRemoteDirectory(ftpClient, remoteDir) {
   }
 }
 
+function upsertParentRedirectBlock(existingContent, marker, block) {
+  const start = existingContent.indexOf(marker);
+  if (start === -1) {
+    return `${existingContent.trimEnd()}\n\n${marker}\n${block}\n`;
+  }
+
+  const afterMarker = existingContent.slice(start + marker.length);
+  const nextMarkerMatch = afterMarker.match(/\n# [a-z0-9-]+ redirects/);
+  const endOfBlock = nextMarkerMatch
+    ? start + marker.length + nextMarkerMatch.index
+    : existingContent.length;
+  const before = existingContent.slice(0, start).trimEnd();
+  const after = existingContent.slice(endOfBlock).trimStart();
+  return `${before}\n\n${marker}\n${block}${after ? `\n\n${after}` : ''}\n`;
+}
+
 async function ensureParentRedirects(ftpClient) {
   const parentHtaccessPath = 'breimato.es/public_html/.htaccess';
   let existingContent = '';
@@ -95,12 +112,11 @@ async function ensureParentRedirects(ftpClient) {
     rmSync(tempDir, { recursive: true, force: true });
   }
 
-  const withoutOldRedirects = existingContent
-    .split(PARENT_REDIRECT_MARKER)[0]
-    .replace(/<IfModule mod_rewrite\.c>[\s\S]*?calculadora-intereses\/[\s\S]*?<\/IfModule>/g, '')
-    .trimEnd();
-
-  const nextContent = `${withoutOldRedirects}\n\n${PARENT_REDIRECT_MARKER}\n${PARENT_REDIRECT_BLOCK}\n`;
+  const nextContent = upsertParentRedirectBlock(
+    existingContent,
+    PARENT_REDIRECT_MARKER,
+    PARENT_REDIRECT_BLOCK,
+  );
   const { Readable } = await import('node:stream');
   await ftpClient.uploadFrom(Readable.from([nextContent]), parentHtaccessPath);
   console.log('Redirects actualizados en public_html/.htaccess.');
