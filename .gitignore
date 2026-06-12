@@ -1,55 +1,22 @@
-# Dependencias
+# Dependencias y build
 node_modules/
-
-# Directorios de construcción y salida
 dist/
-.output/
 
-# Archivos generados
-.astro/
-
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
-# Archivos de entorno y variables locales
+# Variables de entorno con secretos (nunca commitear)
 .env
 .env.local
-.env.*.local
-.env.production
+.env.deploy.local
+.env*.local
 
-# Editores
-.vscode/*
-!.vscode/extensions.json
-!.vscode/settings.json
+# .env.deploy.example es plantilla sin contraseña — sí se puede versionar
+*.pem
+*.key
+credentials.json
+secrets.json
+
+# IDE y sistema
 .idea/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+.vscode/
+*.log
 .DS_Store
-
-# Archivos de caché
-.eslintcache
-.stylelintcache
-
-# Archivos de cobertura de pruebas
-coverage/
-
-# Archivos de TypeScript
-*.tsbuildinfo
-
-# Archivos de despliegue
-.netlify/
-.vercel/
-.cloudflare/
-
-# Archivos temporales
-.temp
-.tmp
-.cache
+Thumbs.db

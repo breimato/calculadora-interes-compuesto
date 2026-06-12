@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      (function () {
+        var storedTheme = localStorage.getItem('calculadora-interes-compuesto-theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme =
+          storedTheme === 'dark' || storedTheme === 'light'
+            ? storedTheme
+            : prefersDark
+              ? 'dark'
+              : 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculadora de interés compuesto — Proyección de inversiones</title>
+    <meta
+      name="description"
+      content="Calcula el crecimiento de tu inversión con interés compuesto, aportaciones periódicas y tramos avanzados. Proyección anual y gráfico de evolución."
+    />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://breimato.es/calculadora-intereses/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Calculadora de interés compuesto" />
+    <meta
+      property="og:description"
+      content="Proyecta el valor futuro de tus ahorros con interés compuesto y aportaciones periódicas."
+    />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:url" content="https://breimato.es/calculadora-intereses/" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Calculadora de interés compuesto",
+        "description": "Calculadora de interés compuesto con aportaciones periódicas y tramos avanzados",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "es",
+        "url": "https://breimato.es/calculadora-intereses/"
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
